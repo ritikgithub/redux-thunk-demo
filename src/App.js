@@ -28,7 +28,7 @@ function App(props) {
             <button className="btn btn-primary" onClick={() => props.showPost()}>Show Posts</button>
           </div>
           <div className="mt-4">
-            {props.showUsers ?  <Posts /> : <Users />}
+            {props.showUsers ?  <Users /> : <Posts />}
           </div>
         </div>
       </Route>

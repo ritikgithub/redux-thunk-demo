@@ -18,15 +18,19 @@ class Users extends Component {
             updatedWebsite: '',
             updatedUserId: '',
             userIdsToBeDeleted: {},
-            filteredUsers:this.props.users
+            filteredUsers: this.props.users
         }
-    } 
+    }
 
-    // static getDerivedStateFromProps(nextProps, prevState) {
-       
-    //       return ({ filteredUsers: nextProps.users });
-    //   }
-    
+
+    componentDidUpdate(prevProps, prevState) {
+        if (prevProps.users!=this.props.users) {
+            this.setState({
+                filteredUsers: [...this.props.users]
+            })
+        }
+    }
+
     deletehandler = (id) => {
         this.props.deleteUser(id);
     }
@@ -67,18 +71,18 @@ class Users extends Component {
         });
     }
 
-    searchHandler =  _.debounce((e)=> {
-            console.log("I am executed");
-            let filtered = this.props.users.filter(user=> user.name.includes(e.target.value));
-            this.setState({
-                filteredUsers:filtered
-            })
-        },1000)
-    
+    searchHandler = _.debounce((e) => {
+        console.log("I am executed");
+        let filtered = this.props.users.filter(user => user.name.includes(e.target.value));
+        this.setState({
+            filteredUsers: filtered
+        })
+    }, 1000)
+
 
     render() {
-        console.log(this.props);
-        console.log(this.state.filteredUsers);
+        // console.log(this.props);
+        // console.log(this.state.filteredUsers);
         console.log("Users rerenders");
         return (
             this.props.loading ? <div className="spinner-border" role="status">
