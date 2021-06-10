@@ -3,7 +3,7 @@ import { Component } from "react";
 import { connect } from 'react-redux'
 import CloseIcon from '@material-ui/icons/Close';
 import EditIcon from '@material-ui/icons/Edit';
-import { deleteMultipleUser, deleteUser } from "../redux/actions/userActions";
+import fetchUsers, { deleteMultipleUser, deleteUser } from "../redux/actions/userActions";
 import Modal from "./Modal";
 import UpdateUserForm from "./UpdateUserForm";
 import { Button } from "@material-ui/core";
@@ -22,6 +22,9 @@ class Users extends Component {
         }
     }
 
+    // componentDidMount() {
+    //     this.props.fetchUsers();
+    // }
 
     componentDidUpdate(prevProps, prevState) {
         if (prevProps.users!=this.props.users) {
@@ -81,9 +84,6 @@ class Users extends Component {
 
 
     render() {
-        // console.log(this.props);
-        // console.log(this.state.filteredUsers);
-        console.log("Users rerenders");
         return (
             this.props.loading ? <div className="spinner-border" role="status">
                 <span class="sr-only">Loading...</span>
@@ -139,7 +139,8 @@ const mapStateToProps = ({ userState }) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         deleteUser: (id) => dispatch(deleteUser(id)),
-        deleteMultipleUser: (ids) => dispatch(deleteMultipleUser(ids))
+        deleteMultipleUser: (ids) => dispatch(deleteMultipleUser(ids)),
+        fetchUsers: () => dispatch(fetchUsers())
     }
 }
 

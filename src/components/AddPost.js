@@ -4,6 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { useDispatch } from 'react-redux';
 import { addPost } from '../redux/actions/postAction';
 import { useHistory } from 'react-router';
+import { v4 as uuidv4 } from 'uuid';
 
 const useStyles = makeStyles(() => ({
    textfield: {
@@ -28,8 +29,8 @@ function AddPost() {
     function addPostHandler() {
         if(title==='' || body==="")
             return;
-        dispatch(addPost({title,body}));
-        history.push('/');
+        dispatch(addPost({id: uuidv4(),title,body}));
+        history.push('/posts');
     }
 
     return (

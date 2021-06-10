@@ -31,7 +31,7 @@ function AddUser() {
         if(name==='' || email==="" || website==="")
             return;
         dispatch(addUser({id: uuidv4(), name,email,website}));
-        history.push('/');
+        history.push('/users');
     }
 
     return (

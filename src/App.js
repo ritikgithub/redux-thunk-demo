@@ -1,14 +1,15 @@
 import './App.css';
 import Users from './components/Users';
-import { showUser, showPost } from './redux/actions/showUserAction'
-import { useEffect } from 'react';
-import fetchUsers from './redux/actions/userActions'
-import fetchPosts from './redux/actions/postAction';
 import Posts from './components/Posts';
-import { connect } from "react-redux";
 import AddUser from './components/AddUser';
 import { BrowserRouter, Route } from 'react-router-dom';
 import AddPost from './components/AddPost';
+import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
+import fetchUsers from './redux/actions/userActions';
+import { connect } from 'react-redux';
+import fetchPosts from './redux/actions/postAction';
+
 
 function App(props) {
   useEffect(() => {
@@ -18,36 +19,27 @@ function App(props) {
   useEffect(() => {
     props.fetchPosts();
   }, [])
+
   console.log("App rerenders");
   return (
     <BrowserRouter>
       <Route exact path='/'>
-        <div>
-          <div className="d-flex justify-content-around mt-2">
-            <button className="btn btn-primary" onClick={() => props.showUser()}>Show Users</button>
-            <button className="btn btn-primary" onClick={() => props.showPost()}>Show Posts</button>
-          </div>
-          <div className="mt-4">
-            {props.showUsers ?  <Users /> : <Posts />}
-          </div>
+        <div className="d-flex justify-content-around mt-2">
+          <Link to="/users">Show Users</Link>
+          <Link to="/posts">Show Posts</Link>
         </div>
       </Route>
+      <Route exact path='/users'><Users /></Route>
+      <Route exact path='/posts'><Posts /></Route>
       <Route exact path='/adduser'><AddUser /></Route>
       <Route exact path='/addpost'><AddPost /></Route>
     </BrowserRouter>
-
   );
 }
 
-const mapStateToProps = ({ showUserState }) => ({
-  showUsers: showUserState.showUsers
-});
-
 const mapDispatchToProps = (dispatch) => ({
   fetchUsers: () => dispatch(fetchUsers()),
-  fetchPosts: () => dispatch(fetchPosts()),
-  showPost: () => dispatch(showPost()),
-  showUser: () => dispatch(showUser())
+  fetchPosts: () => dispatch(fetchPosts())
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(null, mapDispatchToProps)(App);
